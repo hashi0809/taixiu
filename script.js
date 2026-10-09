@@ -94,19 +94,45 @@ function playGame() {
   let statusBox = document.getElementById("status-box");
   statusBox.classList.remove("hidden");
 
-  // BUG: Tất cả xúc xắc đều ra 7, tổng là 21, luôn thua 100% (không trúng ô secret nào)
-  let d1 = 7;
-  let d2 = 7;
-  let d3 = 7;
-  let total = 21;
+  // Tỷ lệ trúng ô bí ẩn (Secret) là 0.01% (0.0001)
+  let isSecretHit = Math.random() < 0.0001;
+
+  let d1,
+    d2,
+    d3,
+    total,
+    win = false;
+
+  if (isSecretHit) {
+    // Trúng ô bí ẩn: gieo xúc xắc ngẫu nhiên bình thường
+    d1 = Math.floor(Math.random() * 6) + 1;
+    d2 = Math.floor(Math.random() * 6) + 1;
+    d3 = Math.floor(Math.random() * 6) + 1;
+    total = d1 + d2 + d3;
+    gameResults.isTai = total >= 11 && total <= 18;
+    gameResults.isChan = total % 2 == 0;
+
+    if (selectedChoice == 1 && gameResults.isTai) win = true;
+    else if (selectedChoice == 2 && !gameResults.isTai) win = true;
+    else if (selectedChoice == 3 && gameResults.isChan) win = true;
+    else if (selectedChoice == 4 && !gameResults.isChan) win = true;
+  } else {
+    // Không trúng ô bí ẩn (99.99%): tất cả ra 7, tổng 21, luôn thua
+    d1 = 7;
+    d2 = 7;
+    d3 = 7;
+    total = 21;
+    gameResults.isTai = false;
+    gameResults.isChan = false;
+    win = false;
+  }
 
   gameResults.d1 = d1;
   gameResults.d2 = d2;
   gameResults.d3 = d3;
   gameResults.total = total;
-  gameResults.isTai = false;
-  gameResults.isChan = false;
-  gameResults.win = false; // Luôn luôn thua 100%
+  gameResults.win = win;
+  gameResults.isSecret = isSecretHit;
 
   setTimeout(() => {
     statusBox.classList.add("hidden");
@@ -163,15 +189,28 @@ function openBowl() {
   bowl.classList.add("opened");
 
   setTimeout(() => {
-    document.getElementById("total-score").innerText =
-      `Tổng điểm: ${gameResults.total} (SECRET - 21)`;
+    let taiXiuStr = gameResults.isTai ? "TÀI" : "XỈU";
+    let chanLeStr = gameResults.isChan ? "CHẴN" : "LẺ";
+
+    if (gameResults.isSecret) {
+      document.getElementById("total-score").innerText =
+        `Tổng điểm: ${gameResults.total} (${taiXiuStr} - ${chanLeStr}) [TRÚNG Ô BÍ ẨN 0.01%]`;
+    } else {
+      document.getElementById("total-score").innerText =
+        `Tổng điểm: ${gameResults.total} (SECRET - 21)`;
+    }
 
     let outcomeMsg = document.getElementById("outcome-message");
 
-    // Luôn luôn trừ tiền vì luôn thua
-    balance -= gameResults.bet;
-    outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ! (Đã quay trúng ô Secret)`;
-    outcomeMsg.className = "outcome-message lose";
+    if (gameResults.win) {
+      balance += gameResults.bet;
+      outcomeMsg.innerText = `CHÚC MỪNG! May mắn trúng ô bí ẩn 0.01%, bạn đã thắng +${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
+      outcomeMsg.className = "outcome-message win";
+    } else {
+      balance -= gameResults.bet;
+      outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
+      outcomeMsg.className = "outcome-message lose";
+    }
 
     updateBalance();
     document.getElementById("result-section").classList.remove("hidden");
