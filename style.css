@@ -17,26 +17,26 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
 }
 
 .game-container {
   background: linear-gradient(
     145deg,
-    rgba(35, 25, 15, 0.85),
-    rgba(15, 10, 5, 0.95)
+    rgba(35, 25, 15, 0.9),
+    rgba(12, 8, 3, 0.95)
   );
-  border-radius: 20px;
-  padding: 25px;
+  border-radius: 22px;
+  padding: 24px;
   width: 100%;
   max-width: 520px;
   box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.8),
-    inset 0 1px 2px rgba(255, 215, 0, 0.3);
+    0 20px 40px rgba(0, 0, 0, 0.9),
+    inset 0 1px 3px rgba(255, 215, 0, 0.4);
   text-align: center;
   border: 2px solid #d4af37;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 h1 {
@@ -44,9 +44,9 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
-  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+  text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
   letter-spacing: 1px;
 }
 
@@ -54,36 +54,77 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(20, 15, 10, 0.6);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(18, 12, 6, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.4);
   padding: 12px 16px;
-  border-radius: 12px;
+  border-radius: 14px;
   margin-bottom: 15px;
-  font-size: 17px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.wallet-box {
+  text-align: left;
+  font-size: 16px;
+}
+
+.wallet-label {
+  color: #e6ccb2;
+  font-size: 13px;
+  display: block;
 }
 
 .wallet-amount {
   color: #00ffcc;
   font-weight: bold;
-  text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+  font-size: 18px;
+  text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+
+.currency {
+  color: #ffd700;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.wallet-actions-group {
+  display: flex;
+  gap: 8px;
 }
 
 .deposit-quick-btn {
-  background: linear-gradient(135deg, #ff8c00, #d32f2f);
+  background: linear-gradient(135deg, #00b09b, #00796b);
   color: white;
-  border: 1px solid #ffcc00;
-  padding: 6px 14px;
+  border: 1px solid #64ffda;
+  padding: 7px 12px;
   border-radius: 8px;
   font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 176, 155, 0.4);
+}
+
+.deposit-quick-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 176, 155, 0.7);
+}
+
+.withdraw-quick-btn {
+  background: linear-gradient(135deg, #d32f2f, #990000);
+  color: white;
+  border: 1px solid #ff8a80;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 13px;
   cursor: pointer;
   transition: 0.2s;
   box-shadow: 0 4px 10px rgba(211, 47, 47, 0.4);
 }
 
-.deposit-quick-btn:hover {
+.withdraw-quick-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(255, 140, 0, 0.6);
+  box-shadow: 0 6px 15px rgba(211, 47, 47, 0.7);
 }
 
 .bet-section {
@@ -103,13 +144,13 @@ h1 {
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid #d4af37;
-  background: rgba(10, 8, 5, 0.8);
+  background: rgba(10, 6, 2, 0.9);
   color: #ffd700;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
   outline: none;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
 }
 
 .chip-buttons {
@@ -119,22 +160,28 @@ h1 {
 }
 
 .chip {
-  padding: 6px 2px;
+  padding: 7px 2px;
   background: linear-gradient(135deg, #4a3512, #241a08);
   color: #ffd700;
   border: 1px solid #d4af37;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   font-size: 12px;
   transition: 0.2s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 
 .chip:hover {
   background: linear-gradient(135deg, #6e4e1a, #38280d);
   border-color: #fff;
   transform: translateY(-2px);
+  color: #fff;
+}
+
+.clear-chip {
+  background: linear-gradient(135deg, #555, #333);
+  border-color: #777;
   color: #fff;
 }
 
@@ -165,7 +212,7 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .choice-btn:hover {
@@ -177,32 +224,32 @@ h1 {
   background: linear-gradient(135deg, #ffd700, #cca100);
   color: #110c05;
   border-color: #fff;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
   text-shadow: none;
 }
 
 .roll-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #d32f2f, #b71c1c);
+  background: linear-gradient(135deg, #ff8c00, #d32f2f);
   color: #fff;
-  border: 1px solid #ff5252;
-  border-radius: 10px;
+  border: 1px solid #ffcc00;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
   text-transform: uppercase;
   box-shadow:
-    0 6px 20px rgba(211, 47, 47, 0.5),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    0 6px 20px rgba(211, 47, 47, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
   letter-spacing: 1px;
 }
 
 .roll-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(211, 47, 47, 0.8);
-  background: linear-gradient(135deg, #e53935, #c62828);
+  box-shadow: 0 8px 25px rgba(255, 140, 0, 0.8);
+  background: linear-gradient(135deg, #ffa726, #e53935);
 }
 
 .roll-btn:disabled {
@@ -220,9 +267,9 @@ h1 {
 .status-box {
   margin-top: 15px;
   padding: 15px;
-  background: rgba(20, 15, 8, 0.9);
+  background: rgba(18, 12, 6, 0.9);
   border: 1px dashed #ffd700;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -230,8 +277,8 @@ h1 {
 }
 
 .spinner {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border: 3px solid rgba(255, 255, 255, 0.2);
   border-top-color: #ffd700;
   border-radius: 50%;
@@ -246,12 +293,12 @@ h1 {
 
 .bowl-container {
   margin-top: 15px;
-  background: rgba(15, 10, 5, 0.7);
+  background: rgba(12, 8, 3, 0.75);
   padding: 15px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   position: relative;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .instruction-drag {
@@ -259,7 +306,7 @@ h1 {
   color: #ffd700;
   margin-bottom: 10px;
   font-weight: bold;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .plate {
@@ -274,8 +321,8 @@ h1 {
   justify-content: center;
   align-items: center;
   box-shadow:
-    inset 0 8px 15px rgba(0, 0, 0, 0.8),
-    0 5px 15px rgba(0, 0, 0, 0.5);
+    inset 0 8px 20px rgba(0, 0, 0, 0.9),
+    0 5px 15px rgba(0, 0, 0, 0.6);
 }
 
 .dice-display {
@@ -297,8 +344,8 @@ h1 {
   align-items: center;
   border-radius: 8px;
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    0 4px 10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .bowl {
@@ -316,8 +363,8 @@ h1 {
   cursor: grab;
   z-index: 10;
   box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.8),
-    inset 0 5px 10px rgba(255, 255, 255, 0.4);
+    0 12px 30px rgba(0, 0, 0, 0.9),
+    inset 0 6px 12px rgba(255, 255, 255, 0.5);
   user-select: none;
   transition: transform 0.3s ease;
 }
@@ -330,7 +377,7 @@ h1 {
   color: #fff;
   font-weight: bold;
   font-size: 16px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
   letter-spacing: 1px;
 }
 
@@ -344,7 +391,7 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0 4px 10px rgba(211, 47, 47, 0.4);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.5);
 }
 
 .open-bowl-btn:hover {
@@ -354,14 +401,14 @@ h1 {
 
 .result-section {
   margin-top: 15px;
-  background: rgba(15, 10, 5, 0.8);
-  padding: 12px;
-  border-radius: 10px;
+  background: rgba(12, 8, 3, 0.85);
+  padding: 14px;
+  border-radius: 12px;
   border: 1px solid #d4af37;
 }
 
 #total-score {
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 6px;
   font-weight: bold;
   color: #ffd700;
@@ -370,23 +417,25 @@ h1 {
 .outcome-message {
   font-size: 15px;
   font-weight: bold;
-  padding: 6px;
-  border-radius: 6px;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .outcome-message.win {
   color: #00ffcc;
   background: rgba(0, 255, 204, 0.15);
-  border: 1px solid rgba(0, 255, 204, 0.3);
+  border: 1px solid rgba(0, 255, 204, 0.4);
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
 }
 
 .outcome-message.lose {
   color: #ff5252;
   background: rgba(255, 82, 82, 0.15);
-  border: 1px solid rgba(255, 82, 82, 0.3);
+  border: 1px solid rgba(255, 82, 82, 0.4);
+  box-shadow: 0 0 15px rgba(255, 82, 82, 0.2);
 }
 
-/* HIỆU ỨNG MODAL KIỂU IOS (LIQUID GLASS / GOLD VIP) */
+/* MODAL iOS LIQUID GLASS VIP */
 .modal {
   position: fixed;
   top: 0;
@@ -415,27 +464,27 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(5, 3, 1, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(5, 3, 1, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .ios-popup {
   position: relative;
   background: linear-gradient(
     145deg,
-    rgba(35, 25, 15, 0.95),
-    rgba(15, 10, 5, 0.98)
+    rgba(35, 25, 15, 0.98),
+    rgba(12, 8, 3, 0.99)
   );
-  border: 1.5px solid #ffd700;
+  border: 2px solid #ffd700;
   padding: 24px;
   border-radius: 20px;
   width: 90%;
-  max-width: 380px;
+  max-width: 390px;
   text-align: left;
   box-shadow:
-    0 25px 50px rgba(0, 0, 0, 0.8),
-    inset 0 1px 2px rgba(255, 215, 0, 0.4);
+    0 30px 60px rgba(0, 0, 0, 0.9),
+    inset 0 1px 3px rgba(255, 215, 0, 0.5);
   transform: scale(0.85);
   transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 10000;
@@ -449,20 +498,21 @@ h1 {
   background: linear-gradient(to bottom, #fff5cc 0%, #ffd700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 18px;
-  margin-bottom: 12px;
+  font-size: 19px;
+  margin-bottom: 14px;
   text-align: center;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: 0.5px;
 }
 
 .bank-info {
-  background: rgba(10, 7, 3, 0.8);
+  background: rgba(10, 6, 2, 0.85);
   padding: 14px;
   border-radius: 12px;
   margin-bottom: 16px;
   font-size: 14px;
   line-height: 1.6;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.4);
 }
 
 .highlight-stk {
@@ -470,7 +520,7 @@ h1 {
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.5px;
-  text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+  text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
 }
 
 .note-transfer {
@@ -488,20 +538,23 @@ h1 {
 
 .deposit-form input {
   width: 100%;
-  padding: 10px 12px;
+  padding: 11px 14px;
   border-radius: 10px;
   border: 1px solid #d4af37;
-  background: rgba(10, 7, 3, 0.9);
+  background: rgba(10, 6, 2, 0.95);
   color: #ffd700;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 18px;
   outline: none;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
 }
 
 .deposit-form input:focus {
   border-color: #fff;
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(255, 215, 0, 0.5);
 }
 
 .modal-actions {

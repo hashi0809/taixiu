@@ -3,21 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Tài Xỉu Xúc Sắc - Nạp Tiền MB Bank</title>
+    <title>VIP Casino - Game Tài Xỉu Đẳng Cấp</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="game-container">
-      <h1>🎲 TÀI XỈU XÚC SẮC 🎲</h1>
+      <h1>🎲 VIP SUN.WIN - TÀI XỈU XÚC SẮC 🎲</h1>
 
       <div class="wallet-section">
-        <div>
+        <div class="wallet-box">
           <span class="wallet-label">Số dư:</span>
-          <span id="balance" class="wallet-amount">10,000,000</span> VNĐ
+          <span id="balance" class="wallet-amount">10,000,000</span>
+          <span class="currency">VNĐ</span>
         </div>
-        <button class="deposit-quick-btn" onclick="openDepositModal()">
-          + Nạp Tiền
-        </button>
+        <div class="wallet-actions-group">
+          <button class="deposit-quick-btn" onclick="openDepositModal()">
+            + Nạp Tiền
+          </button>
+          <button class="withdraw-quick-btn" onclick="openWithdrawModal()">
+            - Rút Tiền
+          </button>
+        </div>
       </div>
 
       <div class="bet-section">
@@ -30,15 +36,15 @@
           step="1000"
         />
         <div class="chip-buttons">
-          <button class="chip" onclick="addChip(10000)">+10K</button>
-          <button class="chip" onclick="addChip(50000)">+50K</button>
-          <button class="chip" onclick="addChip(100000)">+100K</button>
-          <button class="chip" onclick="addChip(500000)">+500K</button>
-          <button class="chip" onclick="addChip(1000000)">+1M</button>
-          <button class="chip" onclick="addChip(2000000)">+2M</button>
-          <button class="chip" onclick="addChip(5000000)">+5M</button>
-          <button class="chip" onclick="addChip(10000000)">+10M</button>
-          <button class="chip" onclick="resetBet()">Xóa</button>
+          <button class="chip" onclick="addChip(10000)">10K</button>
+          <button class="chip" onclick="addChip(50000)">50K</button>
+          <button class="chip" onclick="addChip(100000)">100K</button>
+          <button class="chip" onclick="addChip(500000)">500K</button>
+          <button class="chip" onclick="addChip(1000000)">1M</button>
+          <button class="chip" onclick="addChip(2000000)">2M</button>
+          <button class="chip" onclick="addChip(5000000)">5M</button>
+          <button class="chip" onclick="addChip(10000000)">10M</button>
+          <button class="chip clear-chip" onclick="resetBet()">Xóa</button>
         </div>
       </div>
 
@@ -66,7 +72,7 @@
 
       <div id="status-box" class="status-box hidden">
         <div class="spinner"></div>
-        <p id="status-text">Đang gieo xúc xắc, vui lòng chờ...</p>
+        <p id="status-text">Đang lắc xúc xắc, chờ kết quả Jackpot...</p>
       </div>
 
       <div id="bowl-container" class="bowl-container hidden">
@@ -89,7 +95,7 @@
       </div>
 
       <div id="result-section" class="result-section hidden">
-        <h3>KẾT QUẢ PHIÊN GIAO</h3>
+        <h3>KẾT QUẢ PHIÊN GIAO DỊCH</h3>
         <p id="total-score"></p>
         <p id="outcome-message" class="outcome-message"></p>
       </div>
@@ -100,7 +106,7 @@
       <div class="modal-backdrop" onclick="closeDepositModal()"></div>
       <div class="modal-content ios-popup">
         <div class="modal-header">
-          <h2>💳 NẠP TIỀN TÀI KHOẢN</h2>
+          <h2>💳 NẠP TIỀN MB BANK</h2>
         </div>
         <div class="bank-info">
           <p><strong>Ngân hàng:</strong> MB Bank</p>
@@ -109,9 +115,7 @@
             <span class="highlight-stk">0937808687</span>
           </p>
           <p><strong>Chủ tài khoản:</strong> NGUYEN HOANG PHUC</p>
-          <p class="note-transfer">
-            Quét mã QR hoặc chuyển khoản với nội dung: <em>NAPTIEN</em>
-          </p>
+          <p class="note-transfer">Nội dung chuyển khoản: <em>NAPTIEN</em></p>
         </div>
         <div class="deposit-form">
           <label for="deposit-amount">Số tiền muốn nạp (VNĐ):</label>
@@ -127,6 +131,44 @@
               Xác Nhận Đã Chuyển
             </button>
             <button class="close-modal-btn" onclick="closeDepositModal()">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL RÚT TIỀN -->
+    <div id="withdraw-modal" class="modal hidden">
+      <div class="modal-backdrop" onclick="closeWithdrawModal()"></div>
+      <div class="modal-content ios-popup">
+        <div class="modal-header">
+          <h2>💸 RÚT TIỀN VỀ TÀI KHOẢN</h2>
+        </div>
+        <div class="deposit-form">
+          <label for="withdraw-bank">Ngân hàng nhận:</label>
+          <input
+            type="text"
+            id="withdraw-bank"
+            value="MB Bank - 0937808687"
+            readonly
+            style="color: #00ffcc"
+          />
+
+          <label for="withdraw-amount">Số tiền muốn rút (VNĐ):</label>
+          <input
+            type="number"
+            id="withdraw-amount"
+            value="500000"
+            step="100000"
+            min="100000"
+          />
+
+          <div class="modal-actions">
+            <button class="confirm-deposit-btn" onclick="confirmWithdraw()">
+              Xác Nhận Rút
+            </button>
+            <button class="close-modal-btn" onclick="closeWithdrawModal()">
               Đóng
             </button>
           </div>

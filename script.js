@@ -1,14 +1,15 @@
 let balance = 10000000;
 let selectedChoice = null;
 let gameResults = {
-  d1: 7,
-  d2: 7,
-  d3: 7,
-  total: 21,
+  d1: 1,
+  d2: 1,
+  d3: 1,
+  total: 3,
   isTai: false,
-  isChan: false,
+  isChan: true,
   win: false,
   bet: 0,
+  special: null,
 };
 
 function updateBalance() {
@@ -94,17 +95,25 @@ function playGame() {
   let statusBox = document.getElementById("status-box");
   statusBox.classList.remove("hidden");
 
-  // Tỷ lệ trúng ô bí ẩn (Secret) là 0.01% (0.0001)
-  let isSecretHit = Math.random() < 0.0001;
+  // Tỷ lệ trúng Jackpot 7-7-7 là 1 / 1.000.000.000 (1e-9)
+  let isJackpot = Math.random() < 0.000000001;
 
   let d1,
     d2,
     d3,
     total,
-    win = false;
+    win = false,
+    special = null;
 
-  if (isSecretHit) {
-    // Trúng ô bí ẩn: gieo xúc xắc ngẫu nhiên bình thường
+  if (isJackpot) {
+    d1 = 7;
+    d2 = 7;
+    d3 = 7;
+    total = 21;
+    win = true;
+    special = "JACKPOT";
+  } else {
+    // Gieo xúc xắc bình thường từ 1 đến 6
     d1 = Math.floor(Math.random() * 6) + 1;
     d2 = Math.floor(Math.random() * 6) + 1;
     d3 = Math.floor(Math.random() * 6) + 1;
@@ -116,15 +125,6 @@ function playGame() {
     else if (selectedChoice == 2 && !gameResults.isTai) win = true;
     else if (selectedChoice == 3 && gameResults.isChan) win = true;
     else if (selectedChoice == 4 && !gameResults.isChan) win = true;
-  } else {
-    // Không trúng ô bí ẩn (99.99%): tất cả ra 7, tổng 21, luôn thua
-    d1 = 7;
-    d2 = 7;
-    d3 = 7;
-    total = 21;
-    gameResults.isTai = false;
-    gameResults.isChan = false;
-    win = false;
   }
 
   gameResults.d1 = d1;
@@ -132,7 +132,7 @@ function playGame() {
   gameResults.d3 = d3;
   gameResults.total = total;
   gameResults.win = win;
-  gameResults.isSecret = isSecretHit;
+  gameResults.special = special;
 
   setTimeout(() => {
     statusBox.classList.add("hidden");
@@ -189,27 +189,30 @@ function openBowl() {
   bowl.classList.add("opened");
 
   setTimeout(() => {
-    let taiXiuStr = gameResults.isTai ? "TÀI" : "XỈU";
-    let chanLeStr = gameResults.isChan ? "CHẴN" : "LẺ";
-
-    if (gameResults.isSecret) {
-      document.getElementById("total-score").innerText =
-        `Tổng điểm: ${gameResults.total} (${taiXiuStr} - ${chanLeStr}) [TRÚNG Ô BÍ ẨN 0.01%]`;
-    } else {
-      document.getElementById("total-score").innerText =
-        `Tổng điểm: ${gameResults.total} (SECRET - 21)`;
-    }
-
     let outcomeMsg = document.getElementById("outcome-message");
 
-    if (gameResults.win) {
-      balance += gameResults.bet;
-      outcomeMsg.innerText = `CHÚC MỪNG! May mắn trúng ô bí ẩn 0.01%, bạn đã thắng +${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
+    if (gameResults.special === "JACKPOT") {
+      let jackpotBonus = gameResults.bet * 1000;
+      balance += jackpotBonus;
+      document.getElementById("total-score").innerText =
+        `Tổng điểm: ${gameResults.total} (JACKPOT 7-7-7)`;
+      outcomeMsg.innerText = `🎉 NỔ HŨ JACKPOT! Trúng 7-7-7 tỷ lệ 1/1 tỷ! Nhận thưởng khủng +${jackpotBonus.toLocaleString("vi-VN")} VNĐ!`;
       outcomeMsg.className = "outcome-message win";
     } else {
-      balance -= gameResults.bet;
-      outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
-      outcomeMsg.className = "outcome-message lose";
+      let taiXiuStr = gameResults.isTai ? "TÀI" : "XỈU";
+      let chanLeStr = gameResults.isChan ? "CHẴN" : "LẺ";
+      document.getElementById("total-score").innerText =
+        `Tổng điểm: ${gameResults.total} (${taiXiuStr} - ${chanLeStr})`;
+
+      if (gameResults.win) {
+        balance += gameResults.bet;
+        outcomeMsg.innerText = `CHÚC MỪNG! Bạn đã giành chiến thắng +${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
+        outcomeMsg.className = "outcome-message win";
+      } else {
+        balance -= gameResults.bet;
+        outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
+        outcomeMsg.className = "outcome-message lose";
+      }
     }
 
     updateBalance();
@@ -220,4 +223,37 @@ function openBowl() {
       .querySelectorAll(".choice-btn")
       .forEach((btn) => btn.removeAttribute("disabled"));
   }, 400);
+}
+function openWithdrawModal() {
+  let modal = document.getElementById("withdraw-modal");
+  modal.classList.remove("hidden");
+  setTimeout(() => {
+    modal.classList.add("show");
+  }, 10);
+}
+
+function closeWithdrawModal() {
+  let modal = document.getElementById("withdraw-modal");
+  modal.classList.remove("show");
+  setTimeout(() => {
+    modal.classList.add("hidden");
+  }, 300);
+}
+
+function confirmWithdraw() {
+  let amount = parseInt(document.getElementById("withdraw-amount").value);
+  if (isNaN(amount) || amount <= 0) {
+    alert("Vui lòng nhập số tiền rút hợp lệ!");
+    return;
+  }
+  if (amount > balance) {
+    alert("Số dư trong ví không đủ để rút số tiền này!");
+    return;
+  }
+  balance -= amount;
+  updateBalance();
+  alert(
+    `Rút thành công -${amount.toLocaleString("vi-VN")} VNĐ về tài khoản ngân hàng của bạn!`,
+  );
+  closeWithdrawModal();
 }
