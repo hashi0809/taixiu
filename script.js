@@ -170,7 +170,7 @@ function openBowl() {
 
     // Luôn luôn trừ tiền vì luôn thua
     balance -= gameResults.bet;
-    outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ! (Không trúng ô Secret)`;
+    outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ! (Đã quay trúng ô Secret)`;
     outcomeMsg.className = "outcome-message lose";
 
     updateBalance();
