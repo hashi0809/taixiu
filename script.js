@@ -1,12 +1,12 @@
 let balance = 10000000;
 let selectedChoice = null;
 let gameResults = {
-  d1: 1,
-  d2: 1,
-  d3: 1,
-  total: 3,
+  d1: 7,
+  d2: 7,
+  d3: 7,
+  total: 21,
   isTai: false,
-  isChan: true,
+  isChan: false,
   win: false,
   bet: 0,
 };
@@ -94,24 +94,19 @@ function playGame() {
   let statusBox = document.getElementById("status-box");
   statusBox.classList.remove("hidden");
 
-  let d1 = Math.floor(Math.random() * 6) + 1;
-  let d2 = Math.floor(Math.random() * 6) + 1;
-  let d3 = Math.floor(Math.random() * 6) + 1;
-  let total = d1 + d2 + d3;
+  // BUG: Tất cả xúc xắc đều ra 7, tổng là 21, luôn thua 100% (không trúng ô secret nào)
+  let d1 = 7;
+  let d2 = 7;
+  let d3 = 7;
+  let total = 21;
 
   gameResults.d1 = d1;
   gameResults.d2 = d2;
   gameResults.d3 = d3;
   gameResults.total = total;
-  gameResults.isTai = total >= 11 && total <= 18;
-  gameResults.isChan = total % 2 == 0;
-
-  let win = false;
-  if (selectedChoice == 1 && gameResults.isTai) win = true;
-  else if (selectedChoice == 2 && !gameResults.isTai) win = true;
-  else if (selectedChoice == 3 && gameResults.isChan) win = true;
-  else if (selectedChoice == 4 && !gameResults.isChan) win = true;
-  gameResults.win = win;
+  gameResults.isTai = false;
+  gameResults.isChan = false;
+  gameResults.win = false; // Luôn luôn thua 100%
 
   setTimeout(() => {
     statusBox.classList.add("hidden");
@@ -168,21 +163,15 @@ function openBowl() {
   bowl.classList.add("opened");
 
   setTimeout(() => {
-    let taiXiuStr = gameResults.isTai ? "TÀI" : "XỈU";
-    let chanLeStr = gameResults.isChan ? "CHẴN" : "LẺ";
     document.getElementById("total-score").innerText =
-      `Tổng điểm: ${gameResults.total} (${taiXiuStr} - ${chanLeStr})`;
+      `Tổng điểm: ${gameResults.total} (SECRET - 21)`;
 
     let outcomeMsg = document.getElementById("outcome-message");
-    if (gameResults.win) {
-      balance += gameResults.bet;
-      outcomeMsg.innerText = `CHÚC MỪNG! Bạn đã giành chiến thắng +${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
-      outcomeMsg.className = "outcome-message win";
-    } else {
-      balance -= gameResults.bet;
-      outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ!`;
-      outcomeMsg.className = "outcome-message lose";
-    }
+
+    // Luôn luôn trừ tiền vì luôn thua
+    balance -= gameResults.bet;
+    outcomeMsg.innerText = `TIẾC QUÁ! Bạn đã thua cược -${gameResults.bet.toLocaleString("vi-VN")} VNĐ! (Không trúng ô Secret)`;
+    outcomeMsg.className = "outcome-message lose";
 
     updateBalance();
     document.getElementById("result-section").classList.remove("hidden");
